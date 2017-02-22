@@ -45,5 +45,7 @@
 	<array>
 		<string>Arvo-BoldItalic.ttf</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
