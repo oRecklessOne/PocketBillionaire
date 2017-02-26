@@ -12,6 +12,7 @@ import UIKit
 class MainVC: UIViewController {
     
     var burgerIps = 128
+    var clothingIps = 1543
     var burgerCost = 500
     var networth = 1000
     var totalIps = 128
@@ -23,6 +24,7 @@ class MainVC: UIViewController {
     
     
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var investImg: UIButton!
     @IBOutlet weak var buyImg: UIButton!
     @IBOutlet weak var managerImg: UIButton!
@@ -40,13 +42,23 @@ class MainVC: UIViewController {
     @IBOutlet weak var insufficentFundsLbl: UILabel!
     
     @IBOutlet weak var burgerRing: KDCircularProgress!
-  
-    
-    
+    @IBOutlet weak var clothingRing: KDCircularProgress!
+    @IBOutlet weak var shoppingRing: KDCircularProgress!
+    @IBOutlet weak var carRing: KDCircularProgress!
+    @IBOutlet weak var aiplaneRing: KDCircularProgress!
+    @IBOutlet weak var rocketRing: KDCircularProgress!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var label: UIView
+        for i in 0...5 {
+            
+            let i = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            i.addSubview(label(i))
+        }
+        
+        
         scaleAspectFit(image: burgerImg)
         scaleAspectFit(image: clothingImg)
         scaleAspectFit(image: carImg)
@@ -59,7 +71,10 @@ class MainVC: UIViewController {
         unlocksImg.alpha = 0
         investImg.alpha = 0
         burgerCostLbl.alpha = 0
-        currencyTxt(UIImg: burgerCostLbl, storedInt: burgerCost)
+        currencyTxt(label: burgerCostLbl, storedInt: burgerCost)
+        
+        
+    
     }
 
   
@@ -93,6 +108,27 @@ class MainVC: UIViewController {
     
     @IBAction func clothingPressed(_ sender: UIButton) {
 
+        if IconMenuOpen == false {
+            UIView.animate(withDuration: 0.5, animations: {
+                
+                self.buyImg.alpha = 1
+                self.managerImg.alpha = 1
+                self.unlocksImg.alpha = 1
+                self.investImg.alpha = 1
+                self.burgerCostLbl.alpha = 1
+                self.IconMenuOpen = true
+            })
+            
+        }else if IconMenuOpen{
+            UIView.animate(withDuration: 0.5, animations: {
+                self.buyImg.alpha = 0
+                self.managerImg.alpha = 0
+                self.unlocksImg.alpha = 0
+                self.investImg.alpha = 0
+                self.burgerCostLbl.alpha = 0
+                self.IconMenuOpen = false
+            })
+        }
     }
  
     @IBAction func shoppingPressed(_ sender: UIButton) {
@@ -115,52 +151,54 @@ class MainVC: UIViewController {
     
     // Menu Buttons
     
-    @IBAction func managerPressed(_ sender: UIButton) {
+    @IBAction func burgermanagerTpd(_ sender: UIButton) {
     }
     
-    @IBAction func buyPressed(_ sender: UIButton) {
+    @IBAction func burgerBuyTpd(_ sender: UIButton) {
         
-        
-        if burgerRing.isAnimating() == false{
-        burgerRing.animate(fromAngle: 0, toAngle: 360, duration: 6.0) { completed in
-            if completed {
-                self.networth = self.networth + self.burgerIps
-                self.currencyTxt(UIImg: self.networthLbl, storedInt: self.networth)
-                self.burgerRing.stopAnimation()
-            } else {
-                print("animation stopped, was interrupted")
-            }
-        }
-      }
+     buyBtnTpd(ring: burgerRing, Ips: burgerIps)
+     
     }
     
     
-    @IBAction func unlocksPressed(_ sender: UIButton) {
+    @IBAction func burgerunlocksTpd(_ sender: UIButton) {
     }
     
     
-    @IBAction func investPressed(_ sender: UIButton) {
+    @IBAction func burgerInvestTpd(_ sender: UIButton) {
         
         if networth > burgerCost {
         networth = networth - burgerCost
         burgerIps = burgerIps + 128
+            
         
         totalIps = totalIps + burgerIps
         
-        currencyTxt(UIImg: networthLbl, storedInt: networth)
+        currencyTxt(label: networthLbl, storedInt: networth)
         
-        currencyTxt(UIImg: burgerIpsLbl, storedInt: burgerIps)
+        currencyTxt(label: burgerIpsLbl, storedInt: burgerIps)
         
         burgerCost = burgerCost + 65
         
-        currencyTxt(UIImg: burgerCostLbl, storedInt: burgerCost)
+        currencyTxt(label: burgerCostLbl, storedInt: burgerCost)
         }else{
             insufficentFunds()
         }
     
     }
     
+    @IBAction func clothingManagerTpd(_ sender: UIButton) {
+    }
     
+    @IBAction func clothingBuyTpd(_ sender: UIButton) {
+        buyBtnTpd(ring: clothingRing, Ips: clothingIps)
+    }
+    
+    @IBAction func clothingInvestTpd(_ sender: UIButton) {
+    }
+    
+    @IBAction func clothingUnlocksTpd(_ sender: UIButton) {
+    }
     
 }
 
